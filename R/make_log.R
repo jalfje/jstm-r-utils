@@ -101,10 +101,10 @@ make_log <- function(to.stdout=TRUE, to.file=FALSE, file=NA) {
         }
         # Print output & return invisibly
         if (echo) cat(out)
-        if (save && to.file) cat(out, file=file)
+        if (save && to.file) cat(out, file=file, append=TRUE)
         return(invisible(TRUE))
     }
     logit("Logging initiated.")
-    return(log.it)
+    return(logit)
 }
 
