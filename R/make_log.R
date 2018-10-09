@@ -13,13 +13,14 @@
 #' logit <- make_log()
 #' ```
 #'
-#' After creating `logit`, you can log your data quite simply, but using
+#' After creating `logit`, you can log your data by using
 #' `logit("my", variable, list, "or other data")`.
 #'
-#' The newline option in `logit` allows for logging multiple times on the
+#' The `newline` option in `logit` allows for logging multiple times on the
 #' same output line. The idea behind this is to allow for logging within a loop
-#' to log in each iteration as they occur (somewhat like a progress bar), and
-#' as shown in the example, this is quite straightforward.
+#' to log in each iteration as they occur, somewhat like a progress bar.
+#' As shown in the example, this is quite straightforward. Note that the
+#' timestamp will show the time of the first such call.
 #'
 #' In each call to `logit`, if the parameter `echo` is `TRUE`, then the output
 #' will be printed to stdout. If the parameter `save` is `TRUE`, then the
@@ -42,10 +43,11 @@
 #' 
 #' @examples
 #' log.it <- make.log(TRUE, TRUE, "output.log")
-#' log.it("Hello world")
+#' log.it("Hello world!")
 #' log.it("Starting for loop. 12 iterations.")
 #' for(m in 1:12) { log.it(m, newline=FALSE) }
 #' log.it("Ended for loop.")
+#' # [12:50:42] Hello world!
 #' # [12:50:42] Starting for loop. 12 iterations.
 #' # [12:50:42] 1 2 3 4 5 6 7 8 9 10 11 12
 #' # [12:50:42] Ended for loop.
@@ -83,7 +85,7 @@ make_log <- function(to.stdout=TRUE, to.file=FALSE, file=NA) {
     prev_newline <- TRUE
     cur_newline <- TRUE
     # Create logging function
-    logit <- function(..., echo=to.stdout, save=to.file, newline=TRUE, sep=" ") {
+    log_func <- function(..., echo=to.stdout, save=to.file, newline=TRUE, sep=" ") {
         # Deal with newlines & formatting
         prev_newline <<- cur_newline
         cur_newline <<- newline
@@ -104,6 +106,7 @@ make_log <- function(to.stdout=TRUE, to.file=FALSE, file=NA) {
         if (save && to.file) cat(out, file=file, append=TRUE)
         return(invisible(TRUE))
     }
+    logit <- log_func
     logit("Logging initiated.")
     return(logit)
 }

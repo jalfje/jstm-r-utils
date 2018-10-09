@@ -33,13 +33,14 @@ For the purpose of clarity throughout this documentation, we will use
 \code{logit()} to represent the function returned from \code{make_log}, i.e.\preformatted{logit <- make_log()
 }
 
-After creating \code{logit}, you can log your data quite simply, but using
+After creating \code{logit}, you can log your data by using
 \code{logit("my", variable, list, "or other data")}.
 
-The newline option in \code{logit} allows for logging multiple times on the
+The \code{newline} option in \code{logit} allows for logging multiple times on the
 same output line. The idea behind this is to allow for logging within a loop
-to log in each iteration as they occur (somewhat like a progress bar), and
-as shown in the example, this is quite straightforward.
+to log in each iteration as they occur, somewhat like a progress bar.
+As shown in the example, this is quite straightforward. Note that the
+timestamp will show the time of the first such call.
 
 In each call to \code{logit}, if the parameter \code{echo} is \code{TRUE}, then the output
 will be printed to stdout. If the parameter \code{save} is \code{TRUE}, then the
@@ -52,10 +53,11 @@ it must be specified when \code{make.log} is called.
 }
 \examples{
 log.it <- make.log(TRUE, TRUE, "output.log")
-log.it("Hello world")
+log.it("Hello world!")
 log.it("Starting for loop. 12 iterations.")
 for(m in 1:12) { log.it(m, newline=FALSE) }
 log.it("Ended for loop.")
+# [12:50:42] Hello world!
 # [12:50:42] Starting for loop. 12 iterations.
 # [12:50:42] 1 2 3 4 5 6 7 8 9 10 11 12
 # [12:50:42] Ended for loop.
