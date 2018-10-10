@@ -79,6 +79,7 @@ make_logger_func <- function(logger, silent) {
 
 # Non-exported function. Installs packages that are not installed.
 install_missing <- function(packages, logger_func) {
+    logger_func("Installing missing packages from:", packages)
     new_packages <- packages[!(packages %in% installed.packages()[,"Package"])]
     if (length(new_packages) > 0) {
         logger_func("Installing new packages:", new_packages)
