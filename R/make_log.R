@@ -25,27 +25,27 @@
 #' In each call to `logit`, if the parameter `echo` is `TRUE`, then the output
 #' will be printed to stdout. If the parameter `save` is `TRUE`, then the
 #' output will be appended to the file specified by the parameter `file` passed
-#' to `make_log`. The default value for `echo` is the value of `to.stdout`,
-#' and the default value for `save` is `to.file`. Specifying values for `echo`
-#' or `save` will override these defaults. Note that if `to.file` is `FALSE`,
+#' to `make_log`. The default value for `echo` is the value of `to_stdout`,
+#' and the default value for `save` is `to_file`. Specifying values for `echo`
+#' or `save` will override these defaults. Note that if `to_file` is `FALSE`,
 #' then setting `save` will have no effect; if a logging file is ever desired,
-#' it must be specified when `make.log` is called.
+#' it must be specified when `make_log` is called.
 #'
-#' @param to.stdout logical. If `TRUE`, output is printed to console at
+#' @param to_stdout logical. If `TRUE`, output is printed to console at
 #' each call to `logit` by default. The `echo` parameter can override this.
-#' @param to.file logical. If `TRUE`, output is printed to `file` at each call
+#' @param to_file logical. If `TRUE`, output is printed to `file` at each call
 #' to `logit` by default. The `save` parameter can override this, but only if
-#' `to.file` is `TRUE`.
-#' @param file a character vector naming the logging file. If `to.file` is
+#' `to_file` is `TRUE`.
+#' @param file a character vector naming the logging file. If `to_file` is
 #' `FALSE`, this parameter is ignored.
 #'
 #' @return Logging function
 #'
 #' @examples
-#' log.it <- make.log(TRUE, TRUE, "output.log")
+#' log.it <- make_log(TRUE, TRUE, "output.log")
 #' log.it("Hello world!")
 #' log.it("Starting for loop. 12 iterations.")
-#' for(m in 1:12) { log.it(m, newline=FALSE) }
+#' for(m in 1:12) { log.it(m, newline = FALSE) }
 #' log.it("Ended for loop.")
 #' # [12:50:42] Hello world!
 #' # [12:50:42] Starting for loop. 12 iterations.
@@ -56,7 +56,7 @@
 
 ## Dev notes:
 ##
-## make.log is a closure around the logging function.
+## make_log is a closure around the logging function.
 ## See the following for an intro to closures:
 ## https://stackoverflow.com/a/1088800
 ## http://adv-r.had.co.nz/Functional-programming.html#closures
@@ -70,9 +70,9 @@
 ## Jamie St Martin
 ## 2018-10-03
 
-make_log <- function(to.stdout = TRUE, to.file = FALSE, file = NA) {
+make_log <- function(to_stdout = TRUE, to_file = FALSE, file = NA) {
     # Create file, if requested; error if file creation fails.
-    if (to.file) {
+    if (to_file) {
         tryCatch({
             file.create(file)
         }, warning = function(s) {
@@ -85,7 +85,7 @@ make_log <- function(to.stdout = TRUE, to.file = FALSE, file = NA) {
     prev_newline <- TRUE
     cur_newline <- TRUE
     # Create logging function
-    log_func <- function(..., echo = to.stdout, save = to.file, newline = TRUE, sep = " ") {
+    log_func <- function(..., echo = to_stdout, save = to_file, newline = TRUE, sep = " ") {
         # Deal with newlines & formatting
         prev_newline <<- cur_newline
         cur_newline <<- newline
@@ -103,7 +103,7 @@ make_log <- function(to.stdout = TRUE, to.file = FALSE, file = NA) {
         }
         # Print output & return invisibly
         if (echo) cat(out)
-        if (save && to.file) cat(out, file = file, append = TRUE)
+        if (save && to_file) cat(out, file = file, append = TRUE)
         return(invisible(TRUE))
     }
     logit <- log_func

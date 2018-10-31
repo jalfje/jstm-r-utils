@@ -1,6 +1,6 @@
 Package: jstm
 Title: Miscellaneous Functions From Jstm's Life
-Version: 0.0.0.9000
+Version: 0.1.0.9000
 Authors@R: person("Jamie", "St Martin", email = "jstmartin@uvic.ca", role = c("aut", "cre"))
 Description: This package is a bundle of miscellaneous functions that I've used
     (and sometimes re-used, but not always) that I thought would be helpful to

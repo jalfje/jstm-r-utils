@@ -4,17 +4,17 @@
 \alias{make_log}
 \title{Create a logging function.}
 \usage{
-make_log(to.stdout = TRUE, to.file = FALSE, file = NA)
+make_log(to_stdout = TRUE, to_file = FALSE, file = NA)
 }
 \arguments{
-\item{to.stdout}{logical. If \code{TRUE}, output is printed to console at
+\item{to_stdout}{logical. If \code{TRUE}, output is printed to console at
 each call to \code{logit} by default. The \code{echo} parameter can override this.}
 
-\item{to.file}{logical. If \code{TRUE}, output is printed to \code{file} at each call
+\item{to_file}{logical. If \code{TRUE}, output is printed to \code{file} at each call
 to \code{logit} by default. The \code{save} parameter can override this, but only if
-\code{to.file} is \code{TRUE}.}
+\code{to_file} is \code{TRUE}.}
 
-\item{file}{a character vector naming the logging file. If \code{to.file} is
+\item{file}{a character vector naming the logging file. If \code{to_file} is
 \code{FALSE}, this parameter is ignored.}
 }
 \value{
@@ -45,17 +45,17 @@ timestamp will show the time of the first such call.
 In each call to \code{logit}, if the parameter \code{echo} is \code{TRUE}, then the output
 will be printed to stdout. If the parameter \code{save} is \code{TRUE}, then the
 output will be appended to the file specified by the parameter \code{file} passed
-to \code{make_log}. The default value for \code{echo} is the value of \code{to.stdout},
-and the default value for \code{save} is \code{to.file}. Specifying values for \code{echo}
-or \code{save} will override these defaults. Note that if \code{to.file} is \code{FALSE},
+to \code{make_log}. The default value for \code{echo} is the value of \code{to_stdout},
+and the default value for \code{save} is \code{to_file}. Specifying values for \code{echo}
+or \code{save} will override these defaults. Note that if \code{to_file} is \code{FALSE},
 then setting \code{save} will have no effect; if a logging file is ever desired,
-it must be specified when \code{make.log} is called.
+it must be specified when \code{make_log} is called.
 }
 \examples{
-log.it <- make.log(TRUE, TRUE, "output.log")
+log.it <- make_log(TRUE, TRUE, "output.log")
 log.it("Hello world!")
 log.it("Starting for loop. 12 iterations.")
-for(m in 1:12) { log.it(m, newline=FALSE) }
+for(m in 1:12) { log.it(m, newline = FALSE) }
 log.it("Ended for loop.")
 # [12:50:42] Hello world!
 # [12:50:42] Starting for loop. 12 iterations.

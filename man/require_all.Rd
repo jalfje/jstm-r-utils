@@ -4,7 +4,7 @@
 \alias{require_all}
 \title{Load packages, installing if necessary.}
 \usage{
-require_all(..., logger = cat, silent = FALSE)
+require_all(..., logger = print, silent = FALSE)
 }
 \arguments{
 \item{...}{packages to load. Can be individual character vectors, or lists,
@@ -28,7 +28,7 @@ not installed, and loads them all. It produces an error if it could not
 successfully load all packages.
 
 By default, \code{require_all} will print logging information to the console
-with \code{cat}, but this can be changed either with \code{silent = TRUE} to disable
+with \code{print}, but this can be changed either with \code{silent = TRUE} to disable
 all output, or with \code{logger = mylogger} to pass the logging output to
 \code{mylogger}.
 
@@ -45,7 +45,7 @@ require_all(c("base", "stats"))
 \dontrun{
 # Custom logging function
 logit <- function(s) { sprintf("[\%s] \%s\\n", Sys.time(), s) }
-require_all(c("rgdal", "raster", "doMPI"), logger=logit)
+require_all(c("rgdal", "raster", "doMPI"), logger = logit)
 }
 
 }
