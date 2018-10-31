@@ -1,5 +1,5 @@
 #' Load packages, installing if necessary.
-#' 
+#'
 #' `require_all` installs and loads a list of packages.
 #'
 #' `require_all` takes a list of packages, installs from CRAN those that are
@@ -7,7 +7,7 @@
 #' successfully load all packages.
 #'
 #' By default, `require_all` will print logging information to the console
-#' with `cat`, but this can be changed either with `silent = TRUE` to disable
+#' with `print`, but this can be changed either with `silent = TRUE` to disable
 #' all output, or with `logger = mylogger` to pass the logging output to
 #' `mylogger`.
 #'
@@ -23,7 +23,7 @@
 #' @param logger function taking a single character string. The function to
 #' call when printing output.
 #' @param silent logical. If `TRUE`, this function will produce no output
-#' except errors. If `FALSE`, 
+#' except errors. If `FALSE`,
 #'
 #' @return `invisible(TRUE)`
 #'
@@ -33,7 +33,7 @@
 #' \dontrun{
 #' # Custom logging function
 #' logit <- function(s) { sprintf("[%s] %s\n", Sys.time(), s) }
-#' require_all(c("rgdal", "raster", "doMPI"), logger=logit)
+#' require_all(c("rgdal", "raster", "doMPI"), logger = logit)
 #' }
 #'
 #' @export
@@ -53,8 +53,8 @@
 ## Jamie St Martin
 ## 2018-10-03
 
-require_all <- function(..., logger=cat, silent=FALSE) {
-    packages <- unique(c(..., recursive=TRUE))
+require_all <- function(..., logger = print, silent = FALSE) {
+    packages <- unique(c(..., recursive = TRUE))
     if (length(packages) > 0) {
         logger_func <- make_logger_func(logger, silent)
         install_missing(packages, logger_func)
@@ -71,7 +71,7 @@ require_all <- function(..., logger=cat, silent=FALSE) {
 make_logger_func <- function(logger, silent) {
     function(...) {
         if (!silent) {
-            msg <- paste(c(...), collapse=" ")
+            msg <- paste(c(...), collapse = " ")
             logger(msg)
         }
     }
@@ -80,10 +80,10 @@ make_logger_func <- function(logger, silent) {
 # Non-exported function. Installs packages that are not installed.
 install_missing <- function(packages, logger_func) {
     logger_func("Installing missing packages from:", packages)
-    new_packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+    new_packages <- packages[!(packages %in% installed.packages()[, "Package"])]
     if (length(new_packages) > 0) {
         logger_func("Installing new packages:", new_packages)
-        try(install.packages(new.packages), silent=TRUE)
+        try(install.packages(new.packages), silent = TRUE)
         logger_func("Installed new packages:", new_packages)
     }
     logger_func("All packages installed:", packages)
@@ -94,7 +94,7 @@ install_missing <- function(packages, logger_func) {
 load_packages <- function(packages, logger_func) {
     logger_func("Loading packages:", packages)
     for (p in packages) {
-        suppressPackageStartupMessages(library(p, character.only=TRUE, quietly=TRUE))
+        suppressPackageStartupMessages(library(p, character.only = TRUE, quietly = TRUE))
     }
     logger_func("All packages loaded:", packages)
     return(invisible(TRUE))

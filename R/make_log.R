@@ -31,7 +31,7 @@
 #' then setting `save` will have no effect; if a logging file is ever desired,
 #' it must be specified when `make.log` is called.
 #'
-#' @param to.stdout logical. If `TRUE`, output is printed to console at 
+#' @param to.stdout logical. If `TRUE`, output is printed to console at
 #' each call to `logit` by default. The `echo` parameter can override this.
 #' @param to.file logical. If `TRUE`, output is printed to `file` at each call
 #' to `logit` by default. The `save` parameter can override this, but only if
@@ -40,7 +40,7 @@
 #' `FALSE`, this parameter is ignored.
 #'
 #' @return Logging function
-#' 
+#'
 #' @examples
 #' log.it <- make.log(TRUE, TRUE, "output.log")
 #' log.it("Hello world!")
@@ -70,40 +70,40 @@
 ## Jamie St Martin
 ## 2018-10-03
 
-make_log <- function(to.stdout=TRUE, to.file=FALSE, file=NA) {
+make_log <- function(to.stdout = TRUE, to.file = FALSE, file = NA) {
     # Create file, if requested; error if file creation fails.
     if (to.file) {
         tryCatch({
             file.create(file)
-        }, warning=function(s) {
+        }, warning = function(s) {
             stop(c("Error in creating logging file: ", conditionMessage(w)))
-        }, error=function(e) {
+        }, error = function(e) {
             stop(c("Error in creating logging file: ", conditionMessage(e)))
         })
     }
-    
+
     prev_newline <- TRUE
     cur_newline <- TRUE
     # Create logging function
-    log_func <- function(..., echo=to.stdout, save=to.file, newline=TRUE, sep=" ") {
+    log_func <- function(..., echo = to.stdout, save = to.file, newline = TRUE, sep = " ") {
         # Deal with newlines & formatting
         prev_newline <<- cur_newline
         cur_newline <<- newline
         # Note: We use paste(c(...), collapse=" ") instead of simply paste(...) or
         # c(...) or paste(c(...)), because it's the only way to get everything into
-        # one line of output; using one of the alternatives 
+        # one line of output; using one of the alternatives
         if (cur_newline && prev_newline) {
-            out <- sprintf("[%s] %s\n", format(Sys.time(), "%T"), paste(c(...), collapse=sep))
+            out <- sprintf("[%s] %s\n", format(Sys.time(), "%T"), paste(c(...), collapse = sep))
         } else if (cur_newline && !prev_newline) {
-            out <- sprintf("\n[%s] %s\n", format(Sys.time(), "%T"), paste(c(...), collapse=sep))
+            out <- sprintf("\n[%s] %s\n", format(Sys.time(), "%T"), paste(c(...), collapse = sep))
         } else if (!cur_newline && prev_newline) {
-            out <- sprintf("[%s] %s", format(Sys.time(), "%T"), paste(c(...), collapse=sep))
+            out <- sprintf("[%s] %s", format(Sys.time(), "%T"), paste(c(...), collapse = sep))
         } else { #(!cur_newline && !prev_newline)
-            out <- sprintf("%s%s", sep, paste(c(...), collapse=sep))
+            out <- sprintf("%s%s", sep, paste(c(...), collapse = sep))
         }
         # Print output & return invisibly
         if (echo) cat(out)
-        if (save && to.file) cat(out, file=file, append=TRUE)
+        if (save && to.file) cat(out, file = file, append = TRUE)
         return(invisible(TRUE))
     }
     logit <- log_func
