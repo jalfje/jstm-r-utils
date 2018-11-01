@@ -7,7 +7,7 @@
 set_repo(repo_url)
 }
 \arguments{
-\item{repo_url}{The URL of the CRAN repository to download packages from}
+\item{repo_url}{the URL of the CRAN repository to download packages from.}
 }
 \value{
 The previously repository URL, invisibly.
@@ -16,7 +16,15 @@ The previously repository URL, invisibly.
 \code{set_repo} sets the URL of the repository to download new packages from.
 }
 \details{
-This sets \code{options(repos)}, overwriting the value. The previous value is
-returned, which can be helpful if you want to set the repository only
-temporarily.
+This sets \code{\link[=options]{options(repos)}}, overwriting the current
+value. The previous value is returned, which can be helpful if you want to
+set the repository only temporarily.
+}
+\examples{
+current_repo <- set_repo("http://cran.stat.ucla.edu/")
+set_repo(current_repo)
+
+}
+\seealso{
+\code{\link[=add_lib_path]{add_lib_path()}} \code{\link[=options]{options()}} \code{\link[=install.packages]{install.packages()}}
 }

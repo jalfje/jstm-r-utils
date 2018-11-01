@@ -2,7 +2,7 @@
 % Please edit documentation in R/require_all.R
 \name{require_all}
 \alias{require_all}
-\title{Load packages, installing if necessary.}
+\title{Install and load packages}
 \usage{
 require_all(..., logger = print, silent = FALSE)
 }
@@ -10,34 +10,33 @@ require_all(..., logger = print, silent = FALSE)
 \item{...}{packages to load. Can be individual character vectors, or lists,
 or vectors, or any combination of them. Duplicate elements are ignored.}
 
-\item{logger}{function taking a single character string. The function to
-call when printing output.}
+\item{logger}{function taking a single character string. The function to call
+when printing output.}
 
-\item{silent}{logical. If \code{TRUE}, this function will produce no output
-except errors. If \code{FALSE},}
+\item{silent}{logical. If \code{TRUE}, this function will produce no output except
+errors. If \code{FALSE},}
 }
 \value{
-\code{invisible(TRUE)}
+\code{\link[=invisible]{invisible(TRUE)}}
 }
 \description{
 \code{require_all} installs and loads a list of packages.
 }
 \details{
-\code{require_all} takes a list of packages, installs from CRAN those that are
-not installed, and loads them all. It produces an error if it could not
+\code{require_all} takes a list of packages, installs from CRAN those that are not
+installed, and loads them all. It produces an error if it could not
 successfully load all packages.
 
-By default, \code{require_all} will print logging information to the console
-with \code{print}, but this can be changed either with \code{silent = TRUE} to disable
-all output, or with \code{logger = mylogger} to pass the logging output to
-\code{mylogger}.
+By default, \code{require_all} will print logging information to the console with
+\code{\link{print}}, but this can be changed either with \code{silent = TRUE} to disable all
+output, or with \code{logger = mylogger} to pass the logging output to \code{mylogger}.
 
-The repository location for downloading new packages should be set, which
-can be done with \link{set_repo}. If no such repository is set, a prompt
-will open asking to choose the repository. A valid library location for
-installing new packages should also be set, which can be done with
-\link{add_lib_path}. If no such library is available, a prompt may ask
-for permission to create one in the current user's home directory.
+The repository location for downloading new packages should be set, which can
+be done with \code{\link{set_repo}}. If no such repository is set, a prompt will open
+asking to choose the repository. A valid library location for installing new
+packages should also be set, which can be done with \code{\link{add_lib_path}}. If no
+such library is available, a prompt may ask for permission to create one in
+the current user's home directory.
 }
 \examples{
 require_all(c("base", "stats"))
@@ -48,4 +47,7 @@ logit <- function(s) { sprintf("[\%s] \%s\\n", Sys.time(), s) }
 require_all(c("rgdal", "raster", "doMPI"), logger = logit)
 }
 
+}
+\seealso{
+\code{\link[=set_repo]{set_repo()}} \code{\link[=add_lib_path]{add_lib_path()}} \code{\link[=install.packages]{install.packages()}} \code{\link[=library]{library()}}
 }

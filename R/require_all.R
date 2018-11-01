@@ -1,31 +1,32 @@
-#' Load packages, installing if necessary.
+#' Install and load packages
 #'
 #' `require_all` installs and loads a list of packages.
 #'
-#' `require_all` takes a list of packages, installs from CRAN those that are
-#' not installed, and loads them all. It produces an error if it could not
+#' `require_all` takes a list of packages, installs from CRAN those that are not
+#' installed, and loads them all. It produces an error if it could not
 #' successfully load all packages.
 #'
-#' By default, `require_all` will print logging information to the console
-#' with `print`, but this can be changed either with `silent = TRUE` to disable
-#' all output, or with `logger = mylogger` to pass the logging output to
-#' `mylogger`.
+#' By default, `require_all` will print logging information to the console with
+#' [`print`], but this can be changed either with `silent = TRUE` to disable all
+#' output, or with `logger = mylogger` to pass the logging output to `mylogger`.
 #'
-#' The repository location for downloading new packages should be set, which
-#' can be done with \link{set_repo}. If no such repository is set, a prompt
-#' will open asking to choose the repository. A valid library location for
-#' installing new packages should also be set, which can be done with
-#' \link{add_lib_path}. If no such library is available, a prompt may ask
-#' for permission to create one in the current user's home directory.
+#' The repository location for downloading new packages should be set, which can
+#' be done with [`set_repo`]. If no such repository is set, a prompt will open
+#' asking to choose the repository. A valid library location for installing new
+#' packages should also be set, which can be done with [`add_lib_path`]. If no
+#' such library is available, a prompt may ask for permission to create one in
+#' the current user's home directory.
 #'
 #' @param ... packages to load. Can be individual character vectors, or lists,
-#' or vectors, or any combination of them. Duplicate elements are ignored.
-#' @param logger function taking a single character string. The function to
-#' call when printing output.
-#' @param silent logical. If `TRUE`, this function will produce no output
-#' except errors. If `FALSE`,
+#'   or vectors, or any combination of them. Duplicate elements are ignored.
+#' @param logger function taking a single character string. The function to call
+#'   when printing output.
+#' @param silent logical. If `TRUE`, this function will produce no output except
+#'   errors. If `FALSE`,
 #'
-#' @return `invisible(TRUE)`
+#' @return \code{\link[=invisible]{invisible(TRUE)}}
+#'
+#' @seealso [set_repo()] [add_lib_path()] [install.packages()] [library()]
 #'
 #' @examples
 #' require_all(c("base", "stats"))
@@ -49,6 +50,7 @@
 ## https://stackoverflow.com/q/14834841
 ##
 ## TODO: Super-silent switch, catching errors and returning FALSE instead.
+##        i.e. use "require" instead of "library"
 ##
 ## Jamie St Martin
 ## 2018-10-03
@@ -62,7 +64,6 @@ require_all <- function(..., logger = print, silent = FALSE) {
     }
     return(invisible(TRUE))
 }
-
 
 
 # Non-exported function. Convenience function used internally to create a

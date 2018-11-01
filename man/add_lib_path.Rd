@@ -4,19 +4,22 @@
 \alias{add_lib_path}
 \title{Add library path}
 \usage{
-add_lib_path(libPath)
+add_lib_path(lib_path)
 }
 \arguments{
-\item{libPath}{The path to add, as a character string.}
+\item{lib_path}{the path to add, as a character string.}
 }
 \value{
-Resulting value of \code{.libPaths()}
+Resulting value of \code{\link{.libPaths}}.
 }
 \description{
-\code{add_lib_path} adds a path to the front of \code{.libPaths()}, making the added
+\code{add_lib_path} adds a path to the front of \code{\link{.libPaths}}, making the added
 path be the first path checked for installed packages.
 }
 \details{
 Does nothing if the passed library path is already the first path in
-\code{.libPaths()}.
+\code{\link{.libPaths}}.
+}
+\seealso{
+\code{\link[=set_repo]{set_repo()}} \code{\link[=.libPaths]{.libPaths()}} \code{\link[=install.packages]{install.packages()}}
 }
