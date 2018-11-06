@@ -4,7 +4,7 @@
 #'
 #' `require_all` takes a list of packages, installs from CRAN those that are not
 #' installed, and loads them all. It produces an error if it could not
-#' successfully load all packages.
+#' successfully install or load all packages.
 #'
 #' By default, `require_all` will print logging information to the console with
 #' [`print`], but this can be changed either with `silent = TRUE` to disable all
@@ -72,31 +72,48 @@ require_all <- function(..., logger = print, silent = FALSE) {
 make_logger_func <- function(logger, silent) {
     function(...) {
         if (!silent) {
-            msg <- paste(c(...), collapse = " ")
+            msg <- jstm::pastec(...)
             logger(msg)
         }
     }
 }
 
 # Non-exported function. Installs packages that are not installed.
-install_missing <- function(packages, logger_func) {
-    logger_func("Installing missing packages from:", packages)
+install_missing <- function(packages, logger) {
+    logger("Installing missing packages from:", packages)
     new_packages <- packages[!(packages %in% installed.packages()[, "Package"])]
     if (length(new_packages) > 0) {
-        logger_func("Installing new packages:", new_packages)
-        try(install.packages(new.packages), silent = TRUE)
-        logger_func("Installed new packages:", new_packages)
+        logger("Installing new packages:", new_packages)
+        install_or_error(new_packages, logger)
+        logger("Installed new packages:", new_packages)
     }
-    logger_func("All packages installed:", packages)
+    logger("All packages installed:", packages)
     return(invisible(TRUE))
 }
 
+# Non-exported function. Installs packages; errors if they fail to install.
+install_or_error <- function(packages, logger) {
+    tryCatch({
+        # We specify utils::install.packages because rstudio has its own
+        # version, which doesn't produce warning or error objects, and instead
+        # directly prints the results. Specifying the namespace utils:: ensures
+        # that the correct (error-producing) function is always used.
+        utils::install.packages(packages, lib = .libPaths()[[1]])
+    }, warning = function(w) {
+        stop(conditionMessage(w))
+    }, error = function(e) {
+        msg <- jstm::pastec("Failed to install new packages. Error:", conditionMessage(e))
+        logger(msg)
+        stop(msg)
+    })
+}
+
 # Non-exported function. Loads packages; errors if they cannot be loaded.
-load_packages <- function(packages, logger_func) {
-    logger_func("Loading packages:", packages)
+load_packages <- function(packages, logger) {
+    logger("Loading packages:", packages)
     for (p in packages) {
         suppressPackageStartupMessages(library(p, character.only = TRUE, quietly = TRUE))
     }
-    logger_func("All packages loaded:", packages)
+    logger("All packages loaded:", packages)
     return(invisible(TRUE))
 }

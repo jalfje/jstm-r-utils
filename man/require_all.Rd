@@ -25,7 +25,7 @@ errors. If \code{FALSE},}
 \details{
 \code{require_all} takes a list of packages, installs from CRAN those that are not
 installed, and loads them all. It produces an error if it could not
-successfully load all packages.
+successfully install or load all packages.
 
 By default, \code{require_all} will print logging information to the console with
 \code{\link{print}}, but this can be changed either with \code{silent = TRUE} to disable all
